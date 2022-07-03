@@ -87,8 +87,8 @@
 
         
         //羽
-        var textureLoader = new THREE.textureLoader("img/texute.jpg");
-        var texture = textureLoader.load();
+        var textureLoader = new THREE.textureLoader();
+        var texture = textureLoader.load("img/texute.jpg");
         var mat = new THREE.MeshPhongMaterial();
         mat.map = texture;
 
