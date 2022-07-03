@@ -1,76 +1,172 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>lasttask</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/99/three.min.js"></script>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <script src="https://unpkg.com/three@0.137.4/build/three.min.js"></script>
     <script src="https://unpkg.com/three@0.137.4/examples/js/controls/OrbitControls.js"></script>
-</head>
+  </head>
 <body>
-    <h1>最終課題</h1>
+ <script>
+      // ページの読み込みを待つ
+      window.addEventListener('DOMContentLoaded', init);
 
-    <script>var init = function() {
+      function init() {
+        
+        const width = 800
+        const height = 600;
 
-        var width = 800,
-            height = 600;
-      
-        // レンダラーを作成
+        var wingspeed1 = 0.03;
+        var wingspeed2 = -0.03;
+        var butterflymaxspeed = 0.8;
+
         var renderer = new THREE.WebGLRenderer();
-        renderer.setSize(width, height);
         document.body.appendChild(renderer.domElement);
-      
-        // シーンを作成
-        const scene = new THREE.Scene();
-    
-        // カメラを作成
-        const camera = new THREE.PerspectiveCamera(90, width / height);
-        camera.position.set(0, 0, 10);  //位置を指定
+        renderer.setSize(width, height);
+        renderer.shadowMap.enabled = true;
 
-        const controls = new THREE.OrbitControls(camera,document.body);
+        
+        const scene = new THREE.Scene();
+
+        
+        const camera = new THREE.PerspectiveCamera(15, width / height);
+        
+        camera.position.set(0, 10, 5);
+
+        
+        const controls = new THREE.OrbitControls(camera, document.body); 
+        
         
         var directionalLight1 = new THREE.DirectionalLight(0xffffff);
-        directionalLight1.position.set(-3, 1, 1);   //位置を指定
-        scene.add(directionalLight1);     // シーンに追加
+        directionalLight1.position.set(10, 10, 10);
+        directionalLight1.castShadow = true;
         
-        var directionalLight2 = new THREE.DirectionalLight(0xffffff);
-        directionalLight2.position.set(3, 1, 1);   //位置を指定
-        scene.add(directionalLight2);     // シーンに追加
+        scene.add(directionalLight1);
         
+        var directionalLight2 = new THREE.DirectionalLight(0x888888);
+        directionalLight2.castShadow = true;
+        directionalLight2.position.set(-10, -10, 10);
+        
+        scene.add(directionalLight2);
+      
+       
+        var planeGeometry = new THREE.PlaneGeometry(5,5,10,10); //縦、横、分割数、分割数
+        var planeMaterial = new THREE.MeshPhongMaterial({color: 0x00ff00});
+        var plane = new THREE.Mesh(planeGeometry,planeMaterial);
+        plane.receiveShadow = true; 
+        plane.rotation.set( -Math.PI/2, 0, 0 );
+        plane.position.set(0,0,0);
+        scene.add(plane);
+
+        var material = new THREE.MeshPhongMaterial({ color: 0xCD853F});
         var sphereGeometry = new THREE.SphereGeometry(0.5,32,32);
-        var sphereMaterial = new THREE. MeshPhongMaterial( {color: 0x0000ff,wireframe: true} );
+        var sphereMaterial = new THREE. MeshPhongMaterial( {color: 0x0000ff} );
         //頭
+
+        var head1 = new THREE.Mesh(sphereGeometry,sphereMaterial);
+        head1.scale.set(0.1,0.1,0.1);
+        head1.position.set(-0.2,0,0);
+        var head2 = new THREE.Mesh(sphereGeometry,sphereMaterial);
+        head2.scale.set(0.3,0.02,0.02);
+        head2.position.set(-0.25,0,-0.01);
+        head2.rotation.y = -0.3;
+        var head3 = new THREE.Mesh(sphereGeometry,sphereMaterial);
+        head3.scale.set(0.3,0.02,0.02);
+        head3.position.set(-0.25,0,0.01);
+        head3.rotation.y = 0.3;
+
+
+        var head = new THREE.Group();
+        head.add(head1);
+        head.add(head2);
+        head.add(head3);
 
         //体
         var body = new THREE.Mesh(sphereGeometry,sphereMaterial);
         body.position.set(0,0,0);
-        body.scale.x = 0.5;
-        body.scale.z = 0.2;
-        body.rotation.z = 0.8;
-        scene.add(body);
+        body.scale.set(0.4,0.1,0.1);
         
-    
-        var cylinderGeometry = new THREE.CylinderGeometry( 0.5, 0.5, 0.5, 3 );
-        var cylinderMaterial = new THREE.MeshPhongMaterial({color:0x0000ff});
+
         
         //羽
-        var wing = new THREE.Mesh(cylinderGeometry,cylinderMaterial);
-        wing.scale.y = 0.1;
+        var textureLoader = new THREE.textureLoader();
+        var texture = textureLoader.load("texute.jpg");
+        var mat = new THREE.MeshPhongMaterial();
+        mat.map = texture;
 
-        wing.position.set(0,3,0,3,0);
-        scene.add(wing);
-        // 初回実行
-        var update = function() {
-          requestAnimationFrame(update);
-      
-          renderer.render(scene, camera);
-        };
+        var wing11 = new THREE.Mesh(sphereGeometry,mat);
+        wing11.scale.y = 0.1;
+        wing11.scale.set(0.35,0.1,0.5);
+        wing11.position.set(-0.1,0,-0.25);
+        wing11.rotation.y = 0.7;
+        
+        var wing12 = new THREE.Mesh(sphereGeometry,mat);
+        wing12.scale.y = 0.1;
+        wing12.scale.set(0.35,0.1,0.5);
+        wing12.position.set(-0.1,0,0.25);
+        wing12.rotation.y = -0.7;
+        
+        
+        var wing21 = new THREE.Mesh(sphereGeometry,mat);
+        wing21.scale.y = 0.1;
+        wing21.scale.set(0.3,0.1,0.4);
+        wing21.position.set(0.2,0,-0.2);
+        wing21.rotation.y = -0.7;
+        wing21.rotation.x = -0.1;
+        
+        var wing22 = new THREE.Mesh(sphereGeometry,mat);
+        wing22.scale.y = 0.1;
+        wing22.scale.set(0.3,0.1,0.4);
+        wing22.position.set(0.2,0,0.2);
+        wing22.rotation.y = 0.7;
+        wing22.rotation.x = 0.1;
+
+        body.castShadow = true;
+        wing11.castShadow = true;
+        wing12.castShadow = true;
+        wing21.castShadow = true;
+        wing22.castShadow = true;
+        const wing1 = new THREE.Group();
+        wing1.add(wing11);
+        wing1.add(wing21);
+        const wing2 = new THREE.Group();
+        wing2.add(wing12);
+        wing2.add(wing22);
+        
+        var butterfly = new THREE.Group();
+        butterfly.add(head);
+        butterfly.add(body);
+        butterfly.add(wing1);
+        butterfly.add(wing2);
+        butterfly.position.set(1,1,0);
+        butterfly.rotation.z = -0.3;
+        
+        scene.add(butterfly);
+        var all = new THREE.Group();
+        all.add(plane);
+        all.add(butterfly);
+        all.position.set(0,0,0);
+        scene.add(all);
+        
         update();
-      }
-      
-  window.addEventListener('DOMContentLoaded', init);
-    </script>
 
+        
+
+
+        
+        function update() {
+        
+          renderer.render(scene, camera);
+          requestAnimationFrame(update);
+          
+          if(wing1.rotation.x > butterflymaxspeed || wing1.rotation.x < -1 * butterflymaxspeed){
+            wingspeed1 *= -1;
+          }
+          if(wing2.rotation.x > butterflymaxspeed || wing2.rotation.x < -1 * butterflymaxspeed){
+            wingspeed2 *= -1;
+          }
+          wing1.rotation.x += wingspeed1;
+          wing2.rotation.x += wingspeed2;
+        }
+      }
+    </script>
 </body>
 </html>
