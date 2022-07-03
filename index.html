@@ -122,7 +122,20 @@
         wing22.position.set(0.2,0,0.2);
         wing22.rotation.y = 0.7;
         wing22.rotation.x = 0.1;
+        
+        texture = textureLoader.load("tree.png");
+        const material = new THREE.SpriteMaterial({map:texture});
 
+        var forest = new THREE.Group();
+        for(let i = 0;i < 30;i++){
+          const sprite = new THREE.Sprite(material);
+          sprite.position.x = 2 * (Math.random() - 0.5);
+          sprite.position.y = 0.5 * Math.random();
+          sprite.position.z = 2 * (Math.random() - 0.5);
+          sprite.scale(0.5,0.5,0.5);
+
+          forest.add(sprite);
+        }
         body.castShadow = true;
         wing11.castShadow = true;
         wing12.castShadow = true;
@@ -147,6 +160,7 @@
         var all = new THREE.Group();
         all.add(plane);
         all.add(butterfly);
+        all.add(forest);
         all.position.set(0,0,0);
         scene.add(all);
         
