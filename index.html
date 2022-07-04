@@ -29,7 +29,7 @@
         
         const camera = new THREE.PerspectiveCamera(10, width / height);
         
-        camera.position.set(0, 4, 2);
+        camera.position.set(0, 6, 3);
 
         
         const controls = new THREE.OrbitControls(camera, document.body); 
@@ -143,13 +143,13 @@
         butterfly.add(body);
         butterfly.add(wing1);
         butterfly.add(wing2);
-        butterfly.scale.set(0.3,0.3,0.3);
-        butterfly.position.set(0.3,0.3,0);
+        butterfly.scale.set(0.05,0.05,0.05);
+        butterfly.position.set(0,0.5,0);
         butterfly.rotation.z = -0.3;
-        for(let i = 0;i < 5;i++){
+        for(let i = 0;i < 10;i++){
           const sprite = new THREE.Sprite(material);
           sprite.position.x = 2 * (Math.random() - 0.5);
-          sprite.position.y = 0.2;
+          sprite.position.y = 0.3;
           sprite.position.z = 2 * (Math.random() - 0.5);
           sprite.scale.set(1,1,1);
           forest.add(sprite);
