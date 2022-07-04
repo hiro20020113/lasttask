@@ -29,7 +29,7 @@
         
         const camera = new THREE.PerspectiveCamera(30, width / height);
         
-        camera.position.set(0, 10, 5);
+        camera.position.set(0, 6, 3);
 
         
         const controls = new THREE.OrbitControls(camera, document.body); 
@@ -141,7 +141,7 @@
         butterfly.add(wing1);
         butterfly.add(wing2);
         butterfly.scale.set(0.5,0.5,0.5);
-        butterfly.position.set(0,0.5,-1);
+        butterfly.position.set(0,0.5,-1.5);
         butterfly.rotation.z = -0.3;
         const sprite = new THREE.Sprite(material);
         sprite.position.x = 0;
