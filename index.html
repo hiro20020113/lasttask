@@ -126,11 +126,11 @@
         const material = new THREE.SpriteMaterial({map:texture});
 
         var forest = new THREE.Group();
-        //body.castShadow = true;
-        //wing11.castShadow = true;
-        //wing12.castShadow = true;
-        //wing21.castShadow = true;
-        //wing22.castShadow = true;
+        body.castShadow = true;
+        wing11.castShadow = true;
+        wing12.castShadow = true;
+        wing21.castShadow = true;
+        wing22.castShadow = true;
         const wing1 = new THREE.Group();
         wing1.add(wing11);
         wing1.add(wing21);
@@ -144,10 +144,8 @@
         butterfly.add(wing1);
         butterfly.add(wing2);
         butterfly.position.set(0.3,0.3,0);
-        butterfly.scale.set(0.1,0.1,0.1);
         butterfly.rotation.z = -0.3;
-        butterfly.castShadow = true;
-        for(let i = 0;i < 10;i++){
+        for(let i = 0;i < 5;i++){
           const sprite = new THREE.Sprite(material);
           sprite.position.x = 2 * (Math.random() - 0.5);
           sprite.position.y = 0.2;
