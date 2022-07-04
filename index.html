@@ -27,9 +27,9 @@
         const scene = new THREE.Scene();
 
         
-        const camera = new THREE.PerspectiveCamera(15, width / height);
+        const camera = new THREE.PerspectiveCamera(10, width / height);
         
-        camera.position.set(0, 10, 5);
+        camera.position.set(0, 4, 2);
 
         
         const controls = new THREE.OrbitControls(camera, document.body); 
@@ -155,9 +155,7 @@
           sprite.scale.set(0.5,0.5,0.5);
           forest.add(sprite);
         }
-        butterfly.position.set(1,1,0);
-        scene.add(butterfly);
-        butterfly.position.set(2,1,0);
+        butterfly.position.set(0,0.1,0);
         scene.add(butterfly);
         var all = new THREE.Group();
         all.add(plane);
