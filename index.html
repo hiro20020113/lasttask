@@ -141,19 +141,22 @@
         butterfly.add(wing1);
         butterfly.add(wing2);
         butterfly.scale.set(0.5,0.5,0.5);
-        butterfly.position.set(0,0.5,0);
+        butterfly.position.set(0,0.5,-1);
         butterfly.rotation.z = -0.3;
         const sprite = new THREE.Sprite(material);
         sprite.position.x = 0;
-        sprite.position.y = 1.5;
+        sprite.position.y = 1;
         sprite.position.z = 0;
         sprite.scale.set(3,3,3);
         forest.add(sprite);
         
         scene.add(butterfly);
+        var movement = new THREE.Group();
+        movement.add(butterfly);
+        movement.position.set(0,0,0);
         var all = new THREE.Group();
         all.add(plane);
-        all.add(butterfly);
+        all.add(movement);
         all.add(forest);
         all.position.set(0,0,0);
         scene.add(all);
@@ -177,6 +180,7 @@
           }
           wing1.rotation.x += wingspeed1;
           wing2.rotation.x += wingspeed2;
+          movement.rotation.y += 0.01;
         }
       }
     </script>
